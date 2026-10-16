@@ -136,7 +136,8 @@ namespace DoorIcons
                             return ExtendedDoorState.AccessCustom;
                         }
 
-                        if (HasCustomGlobalPermissions(accessControl, out var permission))
+                        if (HasCustomGlobalPermissions(accessControl, out var permission) ||
+                            (permission != ExtendedDoorState.Auto && permission != ExtendedDoorState.Invalid))
                         {
                             return permission;
                         }
@@ -149,7 +150,8 @@ namespace DoorIcons
                             return ExtendedDoorState.AccessCustom;
                         }
 
-                        if (HasCustomGlobalPermissions(accessControl, out var permission2))
+                        if (HasCustomGlobalPermissions(accessControl, out var permission2) ||
+                            (permission2 != ExtendedDoorState.Auto && permission2 != ExtendedDoorState.Invalid))
                         {
                             return permission2;
                         }
