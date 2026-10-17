@@ -13,6 +13,7 @@ namespace DoorIcons
         public static bool FindModRootPath(string modName, string workshopID, out string? rootPath)
         {
             string modsPath = Manager.GetDirectory().TrimEnd('/', '\\');
+            string? firstRootPath = null;
 
             var possibleLocations = new string[]
             {
@@ -43,13 +44,23 @@ namespace DoorIcons
                         SearchOption.TopDirectoryOnly
                     );
 
-                    rootPath = directories.FirstOrDefault();
-
-                    if (rootPath != null)
+                    foreach (var directory in directories)
                     {
-                        return true;
+                        firstRootPath ??= directory;
+                        var portraitPath = MergePath(directory, "Sprites", "portrait_standard.png");
+                        if (File.Exists(portraitPath))
+                        {
+                            rootPath = directory;
+                            return true;
+                        }
                     }
                 }
+            }
+
+            if (firstRootPath != null)
+            {
+                rootPath = firstRootPath;
+                return true;
             }
 
             rootPath = null;

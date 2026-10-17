@@ -23,6 +23,27 @@ namespace DoorIcons
             {ExtendedDoorState.AccessCustom, CreateSprite("access_custom.png")},
         };
 
+        private static readonly Dictionary<Tag, Sprite?> ModelPortraits = new Dictionary<Tag, Sprite?>
+        {
+            {GameTags.Minions.Models.Standard, CreateSprite("portrait_standard.png")},
+            {GameTags.Minions.Models.Bionic, CreateSprite("portrait_bionic.png")},
+            {GameTags.Robot, CreateSprite("portrait_robot.png")},
+        };
+
+        private static readonly Sprite? GenericModelPortrait = CreateSprite("portrait_generic.png");
+
+        public static Sprite? GetModelPortrait(Tag model)
+        {
+            return ModelPortraits.TryGetValue(model, out var portrait)
+                ? portrait
+                : GenericModelPortrait;
+        }
+
+        public static Sprite? GetGenericModelPortrait()
+        {
+            return GenericModelPortrait;
+        }
+
         private static Sprite? CreateSprite(string spriteFilename)
         {
             Debug.Log($"[ConfigurableDoorIcons] Loading sprite from file: {ConfigurableDoorIcons.UserMod.RootPath}/Sprites/{spriteFilename}");
